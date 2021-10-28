@@ -45,6 +45,9 @@ class _HomePageState extends State<HomePage> {
     void removeSelected(int index) {
       setState(() {
         images.removeAt(index);
+        if (images.length < 1) {
+          isNull = true;
+        }
       });
     }
 
