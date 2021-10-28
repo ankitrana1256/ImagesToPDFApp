@@ -12,10 +12,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<File> images = [];
+  bool isNull = true;
 
   @override
   Widget build(BuildContext context) {
-    // bool isNull = true;
     final _size = MediaQuery.of(context).size;
     Future<void> getImage(ImageSource source) async {
       try {
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         );
 
         setState(() {
-          // isNull = false;
+          isNull = false;
           images.insert(0, imageFile);
         });
       } on PlatformException catch (e) {
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     void clear() {
       setState(() {
         images = [];
-        // isNull = true;
+        isNull = true;
       });
     }
 
@@ -109,61 +109,62 @@ class _HomePageState extends State<HomePage> {
               width: _size.width / 1.1,
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child:
-                    // ? Column(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-
-                    //       Icon(
-                    //         Icons.hourglass_bottom,
-                    //         color: Colors.white,
-                    //         size: 50,
-                    //       ),
-                    //       Text(
-                    //         "\nPlease select your files",
-                    //         style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 24,
-                    //             fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ],
-                    //   )
-                    // :
-                    GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 300,
-                    childAspectRatio: 1.27,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 15,
-                  ),
-                  itemCount: images.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 4),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                        color: Colors.green,
-                        image: DecorationImage(
-                          image: FileImage(
-                            images[index],
+                child: isNull
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.select_all,
+                            color: Colors.white,
+                            size: 50,
                           ),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      child: Center(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          child: Text(
-                            "${index + 1}",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          Text(
+                            "\nPlease select your files",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                        ],
+                      )
+                    : GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 300,
+                          childAspectRatio: 1.27,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 15,
                         ),
+                        itemCount: images.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 4),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                              color: Colors.green,
+                              image: DecorationImage(
+                                image: FileImage(
+                                  images[index],
+                                ),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            child: Center(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                child: Text(
+                                  "${index + 1}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ),
             Spacer(),
@@ -256,9 +257,10 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.deepPurpleAccent,
                       boxShadow: [
                         BoxShadow(
-                            color: Colors.black,
-                            offset: Offset(1, 4),
-                            blurRadius: 4)
+                          color: Colors.black,
+                          offset: Offset(1, 4),
+                          blurRadius: 4,
+                        )
                       ]),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
