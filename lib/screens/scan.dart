@@ -42,6 +42,12 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
+    void removeSelected(int index) {
+      setState(() {
+        images.removeAt(index);
+      });
+    }
+
     // Future<List<int>> _readImageData(String name) async {
     //   final ByteData data = await rootBundle.load('images/$name');
     //   return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
@@ -138,26 +144,30 @@ class _HomePageState extends State<HomePage> {
                         ),
                         itemCount: images.length,
                         itemBuilder: (BuildContext ctx, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 4),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                              image: DecorationImage(
-                                image: FileImage(
-                                  images[index],
+                          return GestureDetector(
+                            onLongPress: () => removeSelected(index),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.white, width: 4),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(15),
                                 ),
-                                fit: BoxFit.fill,
+                                image: DecorationImage(
+                                  image: FileImage(
+                                    images[index],
+                                  ),
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                child: Text(
-                                  "${index + 1}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
+                              child: Center(
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                  child: Text(
+                                    "${index + 1}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
