@@ -144,7 +144,6 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(15),
                               ),
-                              color: Colors.green,
                               image: DecorationImage(
                                 image: FileImage(
                                   images[index],
